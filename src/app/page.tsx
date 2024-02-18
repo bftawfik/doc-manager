@@ -5,9 +5,7 @@ import { DbIcon } from "./_components/svgs";
 
 //eslint-disable-next-line import/no-unused-modules
 export default function Home() {
-  const handleButtonClick = (id: number) => {
-    console.log(id);
-  };
+  const handleButtonClick = (id: number) => {};
 
   const menus = [
     {
