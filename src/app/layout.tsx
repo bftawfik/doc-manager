@@ -1,7 +1,10 @@
 import "./globals.css";
+import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
+import SideBarMenu from "./_components/sidebarMenu/SideBarMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="flex h-full min-h-screen w-full flex-row flex-nowrap">
+          <SideBarMenu />
+
+          <div className="flex-1">{children}</div>
+        </div>
+      </body>
     </html>
   );
 }
