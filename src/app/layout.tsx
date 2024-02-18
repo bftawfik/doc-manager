@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex h-full min-h-screen w-full flex-row flex-nowrap">
+        <div className="flex h-full min-h-screen w-full flex-row flex-nowrap overflow-hidden">
           <SideBarMenu />
 
           <div className="flex-1">{children}</div>
