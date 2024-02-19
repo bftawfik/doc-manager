@@ -10,7 +10,7 @@ interface SideBarMenuProps {
 }
 
 const SideBarMenu = ({
-  className = "border-e border-black/10 flex flex-col gap-3 shrink-0 py-8 px-4 lg:w-60",
+  className = "border-e border-black/10 flex flex-col gap-3 shrink-0 py-8 px-4 lg:w-60 overflow-y-auto",
 }: SideBarMenuProps) => {
   return (
     <aside className={className}>

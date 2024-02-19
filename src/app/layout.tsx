@@ -23,11 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <div className="flex h-full min-h-screen w-full flex-row flex-nowrap overflow-hidden">
-          <SideBarMenu />
-
-          <div className="flex-1">{children}</div>
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <div className="flex h-[calc(100vh-62px)] w-full flex-row flex-nowrap overflow-hidden">
+            <SideBarMenu />
+            <div className="flex-1 ">{children}</div>
+          </div>
         </div>
       </body>
     </html>
