@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import { Doc } from "../_types";
 
+// eslint-disable-next-line import/no-unused-modules
 export async function getFiles(searchQuery?: string): Promise<Doc[]> {
   let url = "http://localhost:3000/api/files";
   if (searchQuery) {
