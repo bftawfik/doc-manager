@@ -41,7 +41,6 @@ export default function Home() {
       <ContentHeader viewType={viewType} handleView={(e) => setViewType(e)} />
       <ColumnsWrapper detailsSection={detailsSection} gridView={gridView}>
         {/* add children cards here */}
-       
       </ColumnsWrapper>
     </ViewWithDrawer>
   );

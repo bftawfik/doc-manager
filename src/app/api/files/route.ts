@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 import { documents } from "./_data/data";
 
 export async function GET(request: Request) {

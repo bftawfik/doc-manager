@@ -1,4 +1,5 @@
 const handleButtonClick = (id: number) => {
+  // eslint-disable-next-line no-console
   console.log(id);
 };
 export const databaseMenu = [
