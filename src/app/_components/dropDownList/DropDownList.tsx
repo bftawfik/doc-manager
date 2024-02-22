@@ -11,7 +11,7 @@ interface Item {
   handler: () => void;
 }
 interface DropDownListProps {
-  label: string | React.ReactNode;
+  label?: string | React.ReactNode;
   icon?: React.ReactNode;
   list: Item[];
 }
@@ -20,14 +20,14 @@ const DropDownList = ({ list, icon, label }: DropDownListProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
-        className="cursor-pointer focus:outline-none"
+        className="cursor-pointer focus:outline-none "
       >
         <button className="flex items-center gap-1">
-          <span className="text-sm text-black/65">{label}</span>
+          {label && <span className="text-sm text-black/65">{label}</span>}
           {icon && icon}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="min-w-fit">
         {list.map(({ id, icon, handler, title }) => (
           <DropdownMenuItem key={id}>
             <button className="flex items-center gap-1" onClick={handler}>

@@ -6,7 +6,7 @@ export interface User {
   imageUrl: string;
 }
 
-export interface Doc {
+export interface File {
   id: number;
   name: string;
   type: string;

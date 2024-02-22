@@ -13,7 +13,7 @@ const ColumnsWrapper = ({
   return (
     <div
       className={clsx(
-        "flex h-full w-full flex-col gap-4 ",
+        "flex h-full w-full flex-col gap-4",
         { "grid grid-cols-2": gridView && detailsSection },
         { "grid grid-cols-3": gridView && !detailsSection }
       )}

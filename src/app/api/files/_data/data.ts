@@ -1,20 +1,20 @@
-import { Doc } from "@/app/_types";
+import { File } from "@/app/_types";
 
 // eslint-disable-next-line import/no-unused-modules
-export const documents: Doc[] = [
+export const documents: File[] = [
   {
     id: 1,
     name: "Document 1",
     type: "pdf",
-    tags: ["important", "work"],
-    last_modified: "2024-02-18T12:30:00Z",
+    tags: ["Financial", "Informative"],
+    last_modified: "20/04/2024",
     isFav: true,
     assigned_users: [
       {
         id: 1,
         name: "John Doe",
         link: "https://example.com/johndoe",
-        imageUrl: "https://loremflickr.com/300/300/",
+        imageUrl: "",
       },
       {
         id: 2,
@@ -26,7 +26,7 @@ export const documents: Doc[] = [
         id: 13,
         name: "Ethan Baker",
         link: "https://example.com/ethanbaker",
-        imageUrl: "https://loremflickr.com/300/300/",
+        imageUrl: "",
       },
       {
         id: 14,
@@ -52,8 +52,8 @@ export const documents: Doc[] = [
     id: 2,
     name: "Document 2",
     type: "word",
-    tags: ["personal"],
-    last_modified: "2024-02-17T10:45:00Z",
+    tags: ["Informative"],
+    last_modified: "07/04/2024",
     isFav: false,
     assigned_users: [
       {
@@ -74,8 +74,8 @@ export const documents: Doc[] = [
     id: 3,
     name: "Document 3",
     type: "excel",
-    tags: ["project", "notes"],
-    last_modified: "2024-02-16T08:15:00Z",
+    tags: ["Bills", "Contract"],
+    last_modified: "09/04/2024",
     isFav: true,
     assigned_users: [
       {
@@ -96,8 +96,8 @@ export const documents: Doc[] = [
     id: 4,
     name: "Document 4",
     type: "excel",
-    tags: ["finance", "report"],
-    last_modified: "2024-02-15T14:20:00Z",
+    tags: ["Bills", "Contract"],
+    last_modified: "07/04/2024",
     isFav: false,
     assigned_users: [
       {
@@ -118,8 +118,8 @@ export const documents: Doc[] = [
     id: 5,
     name: "Document 5",
     type: "pptx",
-    tags: ["presentation", "meeting"],
-    last_modified: "2024-02-14T16:40:00Z",
+    tags: ["Financial", "Bills"],
+    last_modified: "09/04/2024",
     isFav: true,
     assigned_users: [
       {
@@ -140,8 +140,8 @@ export const documents: Doc[] = [
     id: 6,
     name: "Document 6",
     type: "word",
-    tags: ["research", "paper"],
-    last_modified: "2024-02-13T18:50:00Z",
+    tags: ["Financial", "Bills"],
+    last_modified: "16/04/2024",
     isFav: false,
     assigned_users: [
       {
@@ -174,8 +174,8 @@ export const documents: Doc[] = [
     id: 7,
     name: "Document 7",
     type: "pdf",
-    tags: ["research", "study"],
-    last_modified: "2024-02-12T20:10:00Z",
+    tags: ["Contract", "Informative"],
+    last_modified: "20/04/2024",
     isFav: true,
     assigned_users: [
       {
@@ -196,8 +196,8 @@ export const documents: Doc[] = [
     id: 8,
     name: "Document 8",
     type: "word",
-    tags: ["project", "proposal"],
-    last_modified: "2024-02-11T22:30:00Z",
+    tags: ["Financial", "Informative", "Contract", "Bills"],
+    last_modified: "03/04/2024",
     isFav: false,
     assigned_users: [
       {
@@ -219,7 +219,7 @@ export const documents: Doc[] = [
     name: "Document 9",
     type: "excel",
     tags: ["finance", "budget"],
-    last_modified: "2024-02-10T11:45:00Z",
+    last_modified: "06/04/2024",
     isFav: true,
     assigned_users: [
       {
@@ -240,8 +240,8 @@ export const documents: Doc[] = [
     id: 10,
     name: "Document 10",
     type: "excel",
-    tags: ["notes", "meeting"],
-    last_modified: "2024-02-09T09:00:00Z",
+    tags: ["Contract", "meeting"],
+    last_modified: "5/04/2024",
     isFav: false,
     assigned_users: [
       {
@@ -263,7 +263,7 @@ export const documents: Doc[] = [
     name: "Document 11",
     type: "pdf",
     tags: ["report", "analysis"],
-    last_modified: "2024-02-08T13:20:00Z",
+    last_modified: "8/04/2024",
     isFav: true,
     assigned_users: [
       {
@@ -285,7 +285,7 @@ export const documents: Doc[] = [
     name: "Document 12",
     type: "word",
     tags: ["presentation", "training"],
-    last_modified: "2024-02-07T15:40:00Z",
+    last_modified: "10/04/2024",
     isFav: false,
     assigned_users: [
       {
