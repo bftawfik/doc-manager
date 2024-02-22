@@ -34,6 +34,9 @@ export default function Home() {
   const [viewType, setViewType] = useState<ViewTypes>(ViewTypes.GRID);
   const [searchQuery, setSearchQuery] = useState<string>(""); // State to hold the search query
   const [files, setFiles] = useState<File[]>([]); // State to hold the fetched files
+  const [selection, setSelection] = useState<{ [id: number]: boolean }>({});
+  const [isMultiSelect, setIsMultiSelect] = useState<boolean>(false);
+
   // useCallback hook to memoize the fetch function
   const fetchFiles = useCallback(async (query: string | undefined) => {
     const fetchedFiles = await getFiles(query);
@@ -64,6 +67,17 @@ export default function Home() {
       return 400;
     }
   };
+  const toggleSelection = (id: number) => {
+    setSelection((prevSelection) => ({
+      ...(isMultiSelect ? prevSelection : {}),
+      [id]: isMultiSelect ? !prevSelection[id] : true,
+    }));
+  };
+
+  const handleMultiSelectChange = () => {
+    setIsMultiSelect(!isMultiSelect);
+    setSelection({});
+  };
 
   // Effect to fetch files when searchQuery changes or on component mount
   useEffect(() => {
@@ -79,18 +93,27 @@ export default function Home() {
       detailsSection={detailsSection}
     >
       {/* add the header here */}
-      <ContentHeader viewType={viewType} handleView={(e) => setViewType(e)} />
+      <ContentHeader
+        viewType={viewType}
+        handleView={(e) => setViewType(e)}
+        isMultiSelect={isMultiSelect}
+        handleIsMultiSelect={handleMultiSelectChange}
+      />
       <ColumnsWrapper detailsSection={detailsSection} gridView={gridView}>
         {/* add children cards here */}
-        {files.map((file) => (
-          <FileCard
-            key={file.id}
-            file={file}
-            handleViewDetailsSection={handleViewDetailsSection}
-            handleDelete={handleDelete}
-            handleToggleFavorite={handleToggleFavorite}
-          />
-        ))}
+        {files.map((file) => {
+          return (
+            <FileCard
+              key={file.id}
+              file={file}
+              handleViewDetailsSection={handleViewDetailsSection}
+              handleDelete={handleDelete}
+              handleToggleFavorite={handleToggleFavorite}
+              selected={!!selection[file.id]}
+              toggleSelection={toggleSelection}
+            />
+          );
+        })}
       </ColumnsWrapper>
     </ViewWithDrawer>
   );

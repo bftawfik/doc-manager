@@ -19,7 +19,7 @@ const AssignedUsers: React.FC<AssignedUsersProps> = ({ users }) => {
         <div
           className="user relative"
           key={user.id}
-          style={{ zIndex: visibleUsers.length - index }}
+          style={{ zIndex: visibleUsers.length + index }}
         >
           {user.imageUrl ? (
             <div className="-ms-[11px] rounded-full bg-white p-[1px]">
@@ -35,7 +35,7 @@ const AssignedUsers: React.FC<AssignedUsersProps> = ({ users }) => {
             <div
               className={`-ms-[11px] flex h-4 w-4 items-center justify-center rounded-full`}
               style={{
-                zIndex: visibleUsers.length - index,
+                zIndex: visibleUsers.length + index,
                 backgroundColor: getRandomColor(),
               }}
             >
@@ -49,11 +49,9 @@ const AssignedUsers: React.FC<AssignedUsersProps> = ({ users }) => {
       {restCount > 0 && (
         <div
           className="user relative"
-          style={{ zIndex: visibleUsers.length + 1 }}
+          style={{ zIndex: visibleUsers.length + 10 }}
         >
-          <div
-            className={`-ms-[11px] flex h-4 w-4 items-center justify-center rounded-full bg-white`}
-          >
+          <div className="-ms-[11px] flex h-4 w-4 items-center justify-center rounded-full bg-white">
             <span className="text-[10px]">+{restCount}</span>
           </div>
         </div>
