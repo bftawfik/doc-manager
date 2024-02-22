@@ -110,7 +110,7 @@ const ContentHeader = ({ viewType, handleView }: ContentHeaderProps) => {
   );
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="mb-6 flex w-full flex-col gap-4">
       <div className="flex w-full items-center justify-between self-start">
         <ContentTitle title="All Documents" subTitle="1,983 documents" />
         <div className="flex items-center gap-6">
