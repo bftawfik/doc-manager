@@ -9,6 +9,7 @@ export interface User {
 export interface File {
   id: number;
   name: string;
+  status: string;
   type: string;
   tags: string[];
   last_modified: string;

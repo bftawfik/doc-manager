@@ -4,3 +4,6 @@ export * from "./FilesIcon";
 export * from "./MoreDotsIcon";
 export * from "./StarIcon";
 export * from "./StarOutlineIcon";
+export * from "./VerifiedIcon";
+export * from "./PendingIcon";
+export * from "./RejectedIcon";

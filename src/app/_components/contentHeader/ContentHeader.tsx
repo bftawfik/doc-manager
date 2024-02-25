@@ -20,19 +20,20 @@ interface ContentHeaderProps {
   viewType: string;
   handleView: (val: ViewTypes) => void;
   handleIsMultiSelect: () => void;
+  handleShowFavorites: () => void;
   isMultiSelect: boolean;
+  showFavorites?: boolean;
 }
 const ContentHeader = ({
   viewType,
   handleView,
   handleIsMultiSelect,
+  handleShowFavorites,
   isMultiSelect,
+  showFavorites = false,
 }: ContentHeaderProps) => {
   // this method made to handle search input
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
-
-  // handle favourites method
-  const handleFavourites = (e: React.MouseEvent<HTMLButtonElement>) => {};
 
   const selectedIndex = viewType === ViewTypes.GRID ? 0 : 1;
 
@@ -143,7 +144,10 @@ const ContentHeader = ({
             list={filterList}
           />
 
-          <FavouritesButton onClick={handleFavourites} />
+          <FavouritesButton
+            onClick={handleShowFavorites}
+            showFavorites={showFavorites}
+          />
         </div>
       </div>
     </div>
