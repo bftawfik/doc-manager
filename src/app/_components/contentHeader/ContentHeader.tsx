@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useMemo } from "react";
 
 import CheckboxWithLabel from "../checkboxWithLabel/CheckboxWithLabel";
@@ -18,8 +19,15 @@ enum ViewTypes {
 interface ContentHeaderProps {
   viewType: string;
   handleView: (val: ViewTypes) => void;
+  handleIsMultiSelect: () => void;
+  isMultiSelect: boolean;
 }
-const ContentHeader = ({ viewType, handleView }: ContentHeaderProps) => {
+const ContentHeader = ({
+  viewType,
+  handleView,
+  handleIsMultiSelect,
+  isMultiSelect,
+}: ContentHeaderProps) => {
   // this method made to handle search input
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
@@ -51,7 +59,7 @@ const ContentHeader = ({ viewType, handleView }: ContentHeaderProps) => {
         },
       },
     ],
-    [viewType]
+    [handleView, viewType]
   );
 
   const { filterList, sortList } = useMemo(
@@ -121,7 +129,12 @@ const ContentHeader = ({ viewType, handleView }: ContentHeaderProps) => {
         </div>
       </div>
       <div className="flex w-full items-center justify-between self-start">
-        <CheckboxWithLabel id="docs" label="Multi-Select" />
+        <CheckboxWithLabel
+          id="docs"
+          label="Multi-Select"
+          checked={isMultiSelect}
+          handleCheck={handleIsMultiSelect}
+        />
         <div className="flex gap-4">
           <DropDownList label={"Sort By"} icon={<SortIcon />} list={sortList} />
           <DropDownList

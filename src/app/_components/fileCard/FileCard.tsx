@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useState } from "react";
 
 import { File } from "@/app/_types";
@@ -13,12 +14,16 @@ interface FileCardProps {
   handleViewDetailsSection: () => void;
   handleDelete: (id: number) => void;
   handleToggleFavorite: (id: number, isFav: boolean) => Promise<number>;
+  selected: boolean;
+  toggleSelection: (id: number) => void;
 }
 const FileCard: React.FC<FileCardProps> = ({
   file,
   handleViewDetailsSection,
   handleDelete,
   handleToggleFavorite,
+  selected,
+  toggleSelection,
 }) => {
   const [isFavorite, setIsFavorite] = useState(file.isFav);
 
@@ -45,11 +50,15 @@ const FileCard: React.FC<FileCardProps> = ({
       },
     },
   ];
-
   return (
     <div
-      className="flex h-[116px] min-w-[368px] items-center justify-between gap-4 rounded-2xl border border-black/10 p-[10px]"
-      onClick={handleViewDetailsSection}
+      className={clsx(
+        "flex h-[116px] min-w-[368px] items-center justify-between gap-4 rounded-2xl border p-[10px] duration-300",
+        { "border-main": selected, "border-black/10": !selected }
+      )}
+      onClick={() => {
+        toggleSelection(file.id);
+      }}
     >
       <div className="flex h-[96px] w-[96px] shrink-0 flex-col items-center justify-center rounded-[24px] bg-[#FAFAFA]">
         <TypeImage type={file.type} />
