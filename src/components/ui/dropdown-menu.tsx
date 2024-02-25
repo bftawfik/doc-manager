@@ -1,6 +1,7 @@
 "use client";
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import clsx from "clsx";
 import { Check, ChevronRight, Circle } from "lucide-react";
 import * as React from "react";
 
@@ -105,9 +106,14 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span
+      className={clsx(
+        "absolute left-2 flex h-4 w-4 items-center justify-center rounded-md border border-slate-200",
+        { "bg-[#4E46B4]": checked }
+      )}
+    >
       <DropdownMenuPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="h-3 w-3 text-white" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
