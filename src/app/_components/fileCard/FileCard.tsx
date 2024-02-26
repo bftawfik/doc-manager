@@ -58,6 +58,7 @@ const FileCard: React.FC<FileCardProps> = ({
         { "border-main": selected, "border-black/10": !selected }
       )}
       onClick={() => {
+        handleViewDetailsSection();
         toggleSelection(file.id);
       }}
     >

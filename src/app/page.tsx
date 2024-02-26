@@ -4,21 +4,15 @@ import { useCallback, useEffect, useState } from "react";
 
 import ColumnsWrapper from "./_components/columnsWrapper/ColumnsWrapper";
 import ContentHeader from "./_components/contentHeader/ContentHeader";
+import DetailsDrawer, {
+  DetailsDrawerProps,
+} from "./_components/detailsDrawer/DetailsDrawer";
 import FileCard from "./_components/fileCard/FileCard";
 import ViewWithDrawer from "./_components/viewWithDrawer/ViewWithDrawer";
 import { deleteFile, updateFile } from "./_services/deleteUpdateFiles";
 import { getFavorites } from "./_services/getFavorites";
 import { getFiles } from "./_services/getFiles";
 import { File } from "./_types";
-
-const message = "details here";
-const DetailsComp = ({ message }: DrawerDetailsPros) => {
-  return <div> {message}</div>;
-};
-
-interface DrawerDetailsPros {
-  message: string;
-}
 
 enum ViewTypes {
   LIST = "list",
@@ -101,56 +95,10 @@ export default function Home() {
 
   const gridView = viewType === ViewTypes.GRID ? true : false;
 
-  //  // Define the list of checkboxes with their labels and handlers
-  // Define state for the checkboxes
-  const [checkboxStates, setCheckboxStates] = useState<{
-    [id: number]: boolean;
-  }>({
-    1: true, // Initial state for checkbox with id 1
-    2: false, // Initial state for checkbox with id 2
-    3: false, // Initial state for checkbox with id 3
-  });
-  const handleCheckboxChange = (id: number, checked: boolean) => {
-    setCheckboxStates((prevStates) => ({
-      ...prevStates,
-      [id]: checked,
-    }));
-  };
-
-  const checkboxList = [
-    {
-      id: 1,
-      title: "Status Bar",
-      checked: checkboxStates[1] || false,
-      disabled: false,
-      onChange: ({ checked, title }: { checked: boolean; title: string }) => {
-        handleCheckboxChange(1, checked);
-      },
-    },
-    {
-      id: 2,
-      title: "Activity Bar",
-      checked: checkboxStates[2] || false,
-      disabled: false,
-      onChange: ({ checked, title }: { checked: boolean; title: string }) => {
-        handleCheckboxChange(2, checked);
-      },
-    },
-    {
-      id: 3,
-      title: "Panel",
-      checked: checkboxStates[3] || false,
-      disabled: true,
-      onChange: ({ checked, title }: { checked: boolean; title: string }) => {
-        handleCheckboxChange(3, checked);
-      },
-    },
-  ];
-
   return (
-    <ViewWithDrawer<DrawerDetailsPros>
-      drawerComponent={DetailsComp}
-      drawerProps={{ message: message }}
+    <ViewWithDrawer<DetailsDrawerProps>
+      drawerComponent={DetailsDrawer}
+      drawerProps={{ data: undefined }}
       detailsSection={detailsSection}
     >
       {/* add the header here */}
