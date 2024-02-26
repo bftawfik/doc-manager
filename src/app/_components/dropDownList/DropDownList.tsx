@@ -31,8 +31,8 @@ const DropDownList = ({
         className="cursor-pointer focus:outline-none "
       >
         <button className={labelClassName}>
-          {label && <span className="text-sm text-black/65">{label}</span>}
-          {icon && icon}
+          {label ? <span className="text-sm">{label}</span> : null}
+          {icon ? icon : null}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={contentClassName}>
@@ -42,7 +42,7 @@ const DropDownList = ({
               className="flex w-full items-center gap-1"
               onClick={handler}
             >
-              {icon && icon}
+              {icon ? icon : null}
               <span className="text-sm capitalize">{title}</span>
             </button>
           </DropdownMenuItem>
