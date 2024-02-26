@@ -3,6 +3,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import Header from "./_components/header/Header";
+import SideBarMenu from "./_components/sidebarMenu/SideBarMenu";
+
 const inter = Inter({ subsets: ["latin"] });
 
 //eslint-disable-next-line import/no-unused-modules
@@ -19,7 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <div className="flex h-[calc(100vh-62px)] w-full flex-row flex-nowrap overflow-hidden">
+            <SideBarMenu />
+            <div className="flex-1 ">{children}</div>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
