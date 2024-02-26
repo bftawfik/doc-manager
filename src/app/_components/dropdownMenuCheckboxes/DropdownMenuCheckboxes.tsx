@@ -10,16 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface CheckboxItem {
-  id: number;
-  title: string;
-  disabled: boolean;
-}
-
-interface DropdownMenuCheckboxesProps {
+interface DropdownMenuCheckboxesProps<T> {
   label: string | React.ReactNode;
   icon?: React.ReactNode;
-  list: CheckboxItem[];
+  list: T[];
   labelClassName?: string;
   withArrow?: boolean;
   disabled?: boolean;
@@ -27,7 +21,7 @@ interface DropdownMenuCheckboxesProps {
   onChange: (id: number, checked: boolean) => void;
 }
 
-const DropdownMenuCheckboxes: React.FC<DropdownMenuCheckboxesProps> = ({
+const DropdownMenuCheckboxes = <T extends { id: number; name: string }>({
   list,
   icon,
   label,
@@ -36,7 +30,7 @@ const DropdownMenuCheckboxes: React.FC<DropdownMenuCheckboxesProps> = ({
   checkedValues,
   disabled = false,
   labelClassName = "flex justify-between items-center w-[220px] rounded-sm bg-[#EDEDED] p-2 text-black text-start text-sm font-normal placeholder:text-black",
-}) => {
+}: DropdownMenuCheckboxesProps<T>) => {
   const selectedValues = list.filter((item) => checkedValues[item.id]);
   const visibleLabel = selectedValues.length
     ? textWithCommaSeprator(selectedValues)
@@ -60,18 +54,17 @@ const DropdownMenuCheckboxes: React.FC<DropdownMenuCheckboxesProps> = ({
           {withArrow ? <ChevronDown className="h-4 w-4" /> : null}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        {list.map(({ id, title, disabled }) => (
+      <DropdownMenuContent className="h-[200px] w-56 overflow-y-auto">
+        {list.map(({ id, name }) => (
           <React.Fragment key={id}>
             <DropdownMenuCheckboxItem
               key={id}
               checked={checkedValues[id] || false}
               onCheckedChange={(checked) => onChange(id, checked)}
               className="cursor-pointer"
-              disabled={disabled}
               onSelect={(event) => event.preventDefault()}
             >
-              {title}
+              {name}
             </DropdownMenuCheckboxItem>
           </React.Fragment>
         ))}

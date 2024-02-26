@@ -2,11 +2,7 @@ import { Eye } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
-import {
-  databaseList,
-  userList,
-  versionsList,
-} from "@/app/_mocks/detailsViewData";
+import { selectedObjectFromArray } from "@/app/_helpers/selectedObjectFormArray";
 import { File } from "@/app/_types";
 
 import BrandButton from "../brandButton/BrandButton";
@@ -27,19 +23,23 @@ import TagsController from "../tagsController/TagsController";
 import VersionSection from "../versionController/VersionController";
 
 export interface DetailsDrawerProps {
-  data?: File;
+  data: File;
 }
 
 const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
-  const [tags, setTags] = useState<string[]>([]);
-  const [version, setVersion] = useState(1);
+  const [tags, setTags] = useState<string[]>(data?.tags || []);
+  const [version, setVersion] = useState(data.version.id);
 
+  const selectedUsersObject = selectedObjectFromArray(data?.assigned_users);
   const [usersCheckboxStates, setUsersCheckboxStates] = useState<{
     [id: number]: boolean;
-  }>({});
+  }>(selectedUsersObject);
+
+  const selectedDataObject = selectedObjectFromArray(data.assigned_databases);
   const [databaseCheckboxState, setDatabaseCheckboxState] = useState<{
     [id: number]: boolean;
-  }>({});
+  }>(selectedDataObject);
+
   const handleUsersChange = (id: number, checked: boolean) => {
     setUsersCheckboxStates((prevStates) => ({
       ...prevStates,
@@ -88,22 +88,19 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
           <div className=" flex w-full flex-col items-start gap-[20.5px]">
             <div className=" flex w-full items-center justify-between">
               <DrawerLabel label="Title" />
-              <InputField
-                onChange={() => {}}
-                placeholder="Hiring Contract Yara Azzam"
-              />
+              <InputField onChange={() => {}} placeholder={data.name} />
             </div>
             <div className="flex w-full items-center justify-between">
               <DrawerLabel label="Owner" />
               <div className="w-[220px] rounded-sm bg-[#EDEDED] p-2 text-sm font-normal text-black">
-                Username
+                {data.owner.name}
               </div>
             </div>
             <div className="  flex w-full items-center justify-between">
               <DrawerLabel label="Permission" />
               <DropdownMenuCheckboxes
                 withArrow={true}
-                list={userList}
+                list={data?.users || []}
                 checkedValues={usersCheckboxStates}
                 onChange={handleUsersChange}
                 label="SelectUser"
@@ -120,7 +117,7 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
               <VersionSection
                 contentClassName="w-[220px] focus:outline-brand border-brand"
                 onChange={setVersion}
-                list={versionsList}
+                list={data.versions || []}
                 selected={version}
               />
             </div>
@@ -130,13 +127,13 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
                 withArrow={true}
                 checkedValues={databaseCheckboxState}
                 onChange={handleDatabaseChange}
-                list={databaseList}
+                list={data?.databases || []}
                 label="Select Database"
               />
             </div>
             <div className="flex w-full items-center justify-between">
               <DrawerLabel label="Due Date" />
-              <DatePicker />
+              <DatePicker date={data.last_modified} />
             </div>
           </div>
           <div className="border-t pt-8">

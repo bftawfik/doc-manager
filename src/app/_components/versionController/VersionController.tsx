@@ -13,7 +13,7 @@ import {
 import InputField from "../inputField/InputField";
 interface RadioGroupList {
   id: number;
-  title: string;
+  name: string;
 }
 
 interface VersionControllerProps {
@@ -44,7 +44,7 @@ const VersionController: React.FC<VersionControllerProps> = ({
     if (e.key === "Enter") {
       const newVersionItem = {
         id: renderedVersionsList.length + 1,
-        title: versionField,
+        name: versionField,
       };
       renderedVersionsList.push(newVersionItem);
       setVersionField("");
@@ -52,7 +52,7 @@ const VersionController: React.FC<VersionControllerProps> = ({
   };
   const selectedValue = renderedVersionsList.find(
     (item) => item.id === selected
-  )?.title;
+  )?.name;
 
   return (
     <DropdownMenu>
@@ -69,9 +69,9 @@ const VersionController: React.FC<VersionControllerProps> = ({
           value={`${selected}`}
           onValueChange={handleDropDownChange}
         >
-          {renderedVersionsList.map(({ title, id }) => (
+          {renderedVersionsList.map(({ name, id }) => (
             <DropdownMenuRadioItem key={id} value={`${id}`}>
-              {title}
+              {name}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
