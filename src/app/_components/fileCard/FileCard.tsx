@@ -6,6 +6,7 @@ import { File } from "@/app/_types";
 import AssignedUsers from "../assignedUsers/AssignedUsers";
 import DropDownList from "../dropDownList/DropDownList";
 import FileTags from "../fileTags/FileTags";
+import StatusType from "../statusType/StatusType";
 import { MoreDotsIcon, StarIcon, StarOutlineIcon } from "../svgs";
 import TypeImage from "../typeImage/TypeImage";
 
@@ -68,13 +69,20 @@ const FileCard: React.FC<FileCardProps> = ({
           <h6 className="mb-[14px] text-[12px] font-[500]">{file.name}</h6>
           <div className="flex h-full flex-col justify-between gap-3">
             <FileTags tags={file.tags} />
-            <p className="text-[12px] font-[500]">{file.last_modified}</p>
+            <div className="flex items-center gap-1">
+              <p className="text-[12px] font-[500]">{file.last_modified}</p>
+              <StatusType status={file.status} />
+            </div>
           </div>
         </div>
         <div className="flex h-full flex-col justify-between">
           <div className="relative flex justify-end gap-1">
             <button onClick={(event) => handleToggleFavoriteClick(event)}>
-              {isFavorite ? <StarIcon /> : <StarOutlineIcon />}
+              {isFavorite ? (
+                <StarIcon className="text-[#FFA500]" />
+              ) : (
+                <StarOutlineIcon />
+              )}
             </button>
             <DropDownList icon={<MoreDotsIcon />} list={actionsList} />
           </div>

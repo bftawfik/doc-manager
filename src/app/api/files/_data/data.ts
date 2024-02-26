@@ -1,10 +1,16 @@
 import { File } from "@/app/_types";
 
+const status = {
+  verfied: "verified",
+  pending: "pending",
+  rejected: "rejected",
+};
 // eslint-disable-next-line import/no-unused-modules
 export const documents: File[] = [
   {
     id: 1,
     name: "Document 1",
+    status: status.verfied,
     type: "pdf",
     tags: ["Financial", "Informative"],
     last_modified: "20/04/2024",
@@ -51,6 +57,7 @@ export const documents: File[] = [
   {
     id: 2,
     name: "Document 2",
+    status: status.pending,
     type: "word",
     tags: ["Informative"],
     last_modified: "07/04/2024",
@@ -73,6 +80,7 @@ export const documents: File[] = [
   {
     id: 3,
     name: "Document 3",
+    status: status.pending,
     type: "excel",
     tags: ["Bills", "Contract"],
     last_modified: "09/04/2024",
@@ -95,6 +103,7 @@ export const documents: File[] = [
   {
     id: 4,
     name: "Document 4",
+    status: status.pending,
     type: "excel",
     tags: ["Bills", "Contract"],
     last_modified: "07/04/2024",
@@ -117,6 +126,7 @@ export const documents: File[] = [
   {
     id: 5,
     name: "Document 5",
+    status: status.verfied,
     type: "pptx",
     tags: ["Financial", "Bills"],
     last_modified: "09/04/2024",
@@ -139,6 +149,7 @@ export const documents: File[] = [
   {
     id: 6,
     name: "Document 6",
+    status: status.verfied,
     type: "word",
     tags: ["Financial", "Bills"],
     last_modified: "16/04/2024",
@@ -173,6 +184,7 @@ export const documents: File[] = [
   {
     id: 7,
     name: "Document 7",
+    status: status.verfied,
     type: "pdf",
     tags: ["Contract", "Informative"],
     last_modified: "20/04/2024",
@@ -195,6 +207,7 @@ export const documents: File[] = [
   {
     id: 8,
     name: "Document 8",
+    status: status.verfied,
     type: "word",
     tags: ["Financial", "Informative", "Contract", "Bills"],
     last_modified: "03/04/2024",
@@ -217,6 +230,7 @@ export const documents: File[] = [
   {
     id: 9,
     name: "Document 9",
+    status: status.rejected,
     type: "excel",
     tags: ["finance", "budget"],
     last_modified: "06/04/2024",
@@ -239,6 +253,7 @@ export const documents: File[] = [
   {
     id: 10,
     name: "Document 10",
+    status: status.rejected,
     type: "excel",
     tags: ["Contract", "meeting"],
     last_modified: "5/04/2024",
@@ -261,6 +276,7 @@ export const documents: File[] = [
   {
     id: 11,
     name: "Document 11",
+    status: status.verfied,
     type: "pdf",
     tags: ["report", "analysis"],
     last_modified: "8/04/2024",
@@ -283,6 +299,7 @@ export const documents: File[] = [
   {
     id: 12,
     name: "Document 12",
+    status: status.verfied,
     type: "word",
     tags: ["presentation", "training"],
     last_modified: "10/04/2024",

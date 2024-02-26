@@ -7,6 +7,7 @@ import ContentHeader from "./_components/contentHeader/ContentHeader";
 import FileCard from "./_components/fileCard/FileCard";
 import ViewWithDrawer from "./_components/viewWithDrawer/ViewWithDrawer";
 import { deleteFile, updateFile } from "./_services/deleteUpdateFiles";
+import { getFavorites } from "./_services/getFavorites";
 import { getFiles } from "./_services/getFiles";
 import { File } from "./_types";
 
@@ -36,10 +37,16 @@ export default function Home() {
   const [files, setFiles] = useState<File[]>([]); // State to hold the fetched files
   const [selection, setSelection] = useState<{ [id: number]: boolean }>({});
   const [isMultiSelect, setIsMultiSelect] = useState<boolean>(false);
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
 
   // useCallback hook to memoize the fetch function
   const fetchFiles = useCallback(async (query: string | undefined) => {
     const fetchedFiles = await getFiles(query);
+    setFiles(fetchedFiles);
+  }, []);
+
+  const fetchFavorites = useCallback(async () => {
+    const fetchedFiles = await getFavorites();
     setFiles(fetchedFiles);
   }, []);
 
@@ -79,10 +86,18 @@ export default function Home() {
     setSelection({});
   };
 
+  const handleShowFavorites = () => {
+    setShowFavorites(!showFavorites);
+  };
+
   // Effect to fetch files when searchQuery changes or on component mount
   useEffect(() => {
-    fetchFiles(searchQuery);
-  }, [fetchFiles, searchQuery]);
+    if (showFavorites) {
+      fetchFavorites();
+    } else {
+      fetchFiles(searchQuery);
+    }
+  }, [fetchFavorites, fetchFiles, searchQuery, showFavorites]);
 
   const gridView = viewType === ViewTypes.GRID ? true : false;
 
@@ -144,6 +159,8 @@ export default function Home() {
         handleView={(e) => setViewType(e)}
         isMultiSelect={isMultiSelect}
         handleIsMultiSelect={handleMultiSelectChange}
+        handleShowFavorites={handleShowFavorites}
+        showFavorites={showFavorites}
       />
       <ColumnsWrapper detailsSection={detailsSection} gridView={gridView}>
         {/* add children cards here */}
