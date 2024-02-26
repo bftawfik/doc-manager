@@ -3,7 +3,11 @@ import { File } from "../_types";
 
 // eslint-disable-next-line import/no-unused-modules
 export async function getFiles(searchQuery?: string): Promise<File[]> {
-  let url = "http://localhost:3000/api/files";
+  const host =
+    typeof window !== "undefined" && window.location.origin
+      ? window.location.origin
+      : "";
+  let url = `${host}/api/files`;
   if (searchQuery) {
     url += `?q=${encodeURIComponent(searchQuery)}`;
   }

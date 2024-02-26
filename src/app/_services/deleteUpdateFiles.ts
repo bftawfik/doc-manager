@@ -1,8 +1,14 @@
+"use client";
+
 import { File } from "../_types";
 
 /* eslint-disable import/no-unused-modules */
 export async function deleteFile(idToDelete: number): Promise<void> {
-  const url = `http://localhost:3000/api/files?id=${idToDelete}`;
+  const host =
+    typeof window !== "undefined" && window.location.origin
+      ? window.location.origin
+      : "";
+  const url = `${host}/api/files?id=${idToDelete}`;
 
   try {
     const response = await fetch(url, {

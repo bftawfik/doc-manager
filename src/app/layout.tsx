@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 
 import Header from "./_components/header/Header";
 import SideBarMenu from "./_components/sidebarMenu/SideBarMenu";
+import TanstackProvider from "./_hoc/TanstackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,9 @@ export default function RootLayout({
           <Header />
           <div className="flex h-[calc(100vh-62px)] w-full flex-row flex-nowrap overflow-hidden">
             <SideBarMenu />
-            <div className="flex-1 ">{children}</div>
+            <div className="flex-1 ">
+              <TanstackProvider>{children}</TanstackProvider>
+            </div>
           </div>
         </div>
       </body>

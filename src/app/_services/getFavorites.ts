@@ -3,7 +3,11 @@ import { File } from "../_types";
 
 // eslint-disable-next-line import/no-unused-modules
 export async function getFavorites(): Promise<File[]> {
-  const url = "http://localhost:3000/api/favorites";
+  const host =
+    typeof window !== "undefined" && window.location.origin
+      ? window.location.origin
+      : "";
+  const url = `${host}/api/favorites`;
 
   try {
     const response = await fetch(url, { next: { revalidate: 10 } });
