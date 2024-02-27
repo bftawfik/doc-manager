@@ -1,7 +1,8 @@
 import { Eye } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
+import { dateFormmater } from "@/app/_helpers/dateFormatter";
 import { selectedObjectFromArray } from "@/app/_helpers/selectedObjectFormArray";
 import { File } from "@/app/_types";
 
@@ -27,18 +28,17 @@ export interface DetailsDrawerProps {
 }
 
 const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
-  const [tags, setTags] = useState<string[]>(data?.tags || []);
+  const [tags, setTags] = useState<string[]>(data.tags);
   const [version, setVersion] = useState(data.version.id);
-
-  const selectedUsersObject = selectedObjectFromArray(data?.assigned_users);
+  const [date, setDate] = useState<Date>(
+    dateFormmater(data.last_modified, "/", "en-UK")
+  );
   const [usersCheckboxStates, setUsersCheckboxStates] = useState<{
     [id: number]: boolean;
-  }>(selectedUsersObject);
-
-  const selectedDataObject = selectedObjectFromArray(data.assigned_databases);
+  }>(selectedObjectFromArray(data?.assigned_users));
   const [databaseCheckboxState, setDatabaseCheckboxState] = useState<{
     [id: number]: boolean;
-  }>(selectedDataObject);
+  }>(selectedObjectFromArray(data.assigned_databases));
 
   const handleUsersChange = (id: number, checked: boolean) => {
     setUsersCheckboxStates((prevStates) => ({
@@ -52,6 +52,16 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
       [id]: checked,
     }));
   };
+  useMemo(() => {
+    const selectedUsersObject = selectedObjectFromArray(data?.assigned_users);
+    setUsersCheckboxStates(selectedUsersObject);
+    const selectedDataObject = selectedObjectFromArray(data.assigned_databases);
+    setDatabaseCheckboxState(selectedDataObject);
+    setTags(data.tags);
+    const formattedDate = dateFormmater(data.last_modified, "/", "en-UK");
+    setDate(formattedDate);
+    setVersion(data.version.id);
+  }, [data]);
 
   return (
     <div className="flex h-full flex-col border-s">
@@ -133,7 +143,7 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
             </div>
             <div className="flex w-full items-center justify-between">
               <DrawerLabel label="Due Date" />
-              <DatePicker date={data.last_modified} />
+              <DatePicker dateValue={date} handleChange={setDate} />
             </div>
           </div>
           <div className="border-t pt-8">

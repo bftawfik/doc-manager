@@ -3,7 +3,6 @@
 import { format } from "date-fns";
 import { useState } from "react";
 
-import { dateFormmater } from "@/app/_helpers/dateFormatter";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -17,14 +16,15 @@ import { CalendarIcon } from "../svgs";
 const DATE_FORMATTER = "PPP";
 interface DatePickerProps {
   disabled?: boolean;
-  date: string;
+  dateValue: Date;
+  handleChange: React.Dispatch<React.SetStateAction<Date>>;
 }
-const DatePicker = ({ date, disabled = false }: DatePickerProps) => {
+const DatePicker = ({
+  handleChange,
+  dateValue,
+  disabled = false,
+}: DatePickerProps) => {
   const [calendarOpen, setCalendarOpen] = useState(false);
-
-  const [dateValue, setDateValue] = useState<Date>(
-    dateFormmater(date, "/", "en-UK")
-  );
 
   return (
     <div>
@@ -50,7 +50,7 @@ const DatePicker = ({ date, disabled = false }: DatePickerProps) => {
             defaultMonth={dateValue}
             onSelect={(date) => {
               if (date) {
-                setDateValue(date);
+                handleChange(date);
               }
               setCalendarOpen(false);
             }}

@@ -23,11 +23,6 @@ enum ViewTypes {
 
 //eslint-disable-next-line import/no-unused-modules
 export default function Home() {
-  const [detailsSection, setDetailsSection] = useState(false);
-  const handleViewDetailsSection = () => {
-    setDetailsSection(!detailsSection);
-  };
-
   const [viewType, setViewType] = useState<ViewTypes>(ViewTypes.GRID);
   const [searchQuery, setSearchQuery] = useState<string>(""); // State to hold the search query
   const [files, setFiles] = useState<File[]>([]); // State to hold the fetched files
@@ -44,6 +39,7 @@ export default function Home() {
     queryKey: [GET_FILES, searchQuery],
     queryFn: () => getFiles(searchQuery),
   });
+  const viewDetailsSection = Object.keys(selection).length > 0;
 
   const handleDelete = async (idToDelete: number) => {
     try {
@@ -108,7 +104,7 @@ export default function Home() {
       drawerProps={{
         data: renderedFileData as File,
       }}
-      detailsSection={detailsSection}
+      detailsSection={viewDetailsSection}
     >
       {/* add the header here */}
       <ContentHeader
@@ -119,14 +115,13 @@ export default function Home() {
         handleShowFavorites={handleShowFavorites}
         showFavorites={showFavorites}
       />
-      <ColumnsWrapper detailsSection={detailsSection} gridView={gridView}>
+      <ColumnsWrapper detailsSection={viewDetailsSection} gridView={gridView}>
         {/* add children cards here */}
         {files.map((file) => {
           return (
             <FileCard
               key={file.id}
               file={file}
-              handleViewDetailsSection={handleViewDetailsSection}
               handleDelete={handleDelete}
               handleToggleFavorite={handleToggleFavorite}
               selected={!!selection[file.id]}

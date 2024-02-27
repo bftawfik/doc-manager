@@ -12,7 +12,6 @@ import TypeImage from "../typeImage/TypeImage";
 
 interface FileCardProps {
   file: File;
-  handleViewDetailsSection: () => void;
   handleDelete: (id: number) => void;
   handleToggleFavorite: (id: number, isFav: boolean) => Promise<number>;
   selected: boolean;
@@ -20,7 +19,6 @@ interface FileCardProps {
 }
 const FileCard: React.FC<FileCardProps> = ({
   file,
-  handleViewDetailsSection,
   handleDelete,
   handleToggleFavorite,
   selected,
@@ -58,7 +56,6 @@ const FileCard: React.FC<FileCardProps> = ({
         { "border-main": selected, "border-black/10": !selected }
       )}
       onClick={() => {
-        handleViewDetailsSection();
         toggleSelection(file.id);
       }}
     >
