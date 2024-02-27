@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 import ColumnsWrapper from "./_components/columnsWrapper/ColumnsWrapper";
 import ContentHeader from "./_components/contentHeader/ContentHeader";
@@ -9,6 +10,7 @@ import DetailsDrawer, {
 } from "./_components/detailsDrawer/DetailsDrawer";
 import FileCard from "./_components/fileCard/FileCard";
 import ViewWithDrawer from "./_components/viewWithDrawer/ViewWithDrawer";
+import { GET_FAVORITES_FILES, GET_FILES } from "./_constants";
 import { deleteFile, updateFile } from "./_services/deleteUpdateFiles";
 import { getFavorites } from "./_services/getFavorites";
 import { getFiles } from "./_services/getFiles";
@@ -32,22 +34,23 @@ export default function Home() {
   const [selection, setSelection] = useState<{ [id: number]: boolean }>({});
   const [isMultiSelect, setIsMultiSelect] = useState<boolean>(false);
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
-  // useCallback hook to memoize the fetch function
-  const fetchFiles = useCallback(async (query: string | undefined) => {
-    const fetchedFiles = await getFiles(query);
-    setFiles(fetchedFiles);
-  }, []);
-
-  const fetchFavorites = useCallback(async () => {
-    const fetchedFiles = await getFavorites();
-    setFiles(fetchedFiles);
-  }, []);
+  const { data: favoriteFiles } = useQuery({
+    queryKey: [GET_FAVORITES_FILES],
+    queryFn: getFavorites,
+  });
+  const { data: allFiles } = useQuery({
+    queryKey: [GET_FILES, searchQuery],
+    queryFn: () => getFiles(searchQuery),
+  });
 
   const handleDelete = async (idToDelete: number) => {
     try {
       await deleteFile(idToDelete);
       setFiles(files.filter((file) => file.id !== idToDelete));
+      queryClient.invalidateQueries({ queryKey: [GET_FILES, searchQuery] });
+      queryClient.invalidateQueries({ queryKey: [GET_FAVORITES_FILES] });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Error deleting file:", error);
@@ -61,6 +64,9 @@ export default function Home() {
     try {
       await updateFile(id, { isFav });
       // Handle UI updates or refresh data
+      queryClient.invalidateQueries({ queryKey: [GET_FILES, searchQuery] });
+      queryClient.invalidateQueries({ queryKey: [GET_FAVORITES_FILES] });
+
       return 200;
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -86,12 +92,11 @@ export default function Home() {
 
   // Effect to fetch files when searchQuery changes or on component mount
   useEffect(() => {
-    if (showFavorites) {
-      fetchFavorites();
-    } else {
-      fetchFiles(searchQuery);
+    const filesToShow = showFavorites ? favoriteFiles : allFiles;
+    if (filesToShow) {
+      setFiles(filesToShow);
     }
-  }, [fetchFavorites, fetchFiles, searchQuery, showFavorites]);
+  }, [allFiles, favoriteFiles, showFavorites]);
 
   const gridView = viewType === ViewTypes.GRID ? true : false;
 
