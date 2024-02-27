@@ -7,7 +7,7 @@ export async function getFiles(searchQuery?: string): Promise<File[]> {
     typeof window !== "undefined" && window.location.origin
       ? window.location.origin
       : "";
-  let url = `${host}/api/files`;
+  let url = `${host}/api/v2/files`;
   if (searchQuery) {
     url += `?q=${encodeURIComponent(searchQuery)}`;
   }
