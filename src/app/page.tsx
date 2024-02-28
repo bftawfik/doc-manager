@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ColumnsWrapper from "./_components/columnsWrapper/ColumnsWrapper";
 import ContentHeader from "./_components/contentHeader/ContentHeader";
 import DetailsDrawer, {
-  DetailsDrawerProps,
+  DetailsDrawerHOCProps,
 } from "./_components/detailsDrawer/DetailsDrawer";
 import FileCard from "./_components/fileCard/FileCard";
 import ViewWithDrawer from "./_components/viewWithDrawer/ViewWithDrawer";
@@ -71,10 +71,18 @@ export default function Home() {
     }
   };
   const toggleSelection = (id: number) => {
-    setSelection((prevSelection) => ({
-      ...(isMultiSelect ? prevSelection : {}),
-      [id]: isMultiSelect ? !prevSelection[id] : true,
-    }));
+    setSelection((prevSelection) => {
+      const found = !!prevSelection[id];
+      if (found) {
+        const newSelection = { ...prevSelection };
+        delete newSelection[id];
+        return newSelection;
+      }
+      return {
+        ...(isMultiSelect ? prevSelection : {}),
+        [id]: isMultiSelect ? !prevSelection[id] : true,
+      };
+    });
   };
 
   const handleMultiSelectChange = () => {
@@ -96,13 +104,13 @@ export default function Home() {
 
   const gridView = viewType === ViewTypes.GRID ? true : false;
 
-  const renderedFileData =
-    files.find((fileData) => selection[fileData.id]) || {};
+  const renderedFileData = files.find((fileData) => selection[fileData.id]);
+
   return (
-    <ViewWithDrawer<DetailsDrawerProps>
+    <ViewWithDrawer<DetailsDrawerHOCProps>
       drawerComponent={DetailsDrawer}
       drawerProps={{
-        data: renderedFileData as File,
+        data: renderedFileData ? (renderedFileData as File) : undefined,
       }}
       detailsSection={viewDetailsSection}
     >

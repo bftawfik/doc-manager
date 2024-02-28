@@ -25,3 +25,23 @@ export interface File {
   users: User[];
   assigned_users: User[];
 }
+export interface version {
+  id: number;
+  name: string;
+  status: string;
+  type: string;
+  tags: string[];
+  last_modified: string;
+  isFav: boolean;
+  owner: User;
+  databases: database[];
+  assigned_databases: database[];
+  users: User[];
+  assigned_users: User[];
+}
+
+export interface Doc2 {
+  id: number;
+  last_updated_version: string;
+  versions: { [key: string]: version };
+}
