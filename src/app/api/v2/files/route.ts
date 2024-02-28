@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const searchQuery = searchParams.get("q");
 
-  let searchResults = documents.map((document) => {
+  const searchResults = documents.map((document) => {
     return {
       ...document.versions[document.last_updated_version],
       id: document.id,

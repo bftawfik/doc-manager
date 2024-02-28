@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import ColumnsWrapper from "./_components/columnsWrapper/ColumnsWrapper";
 import ContentHeader from "./_components/contentHeader/ContentHeader";
-import DetailsDrawer, {
+import DetailsDrawerHOC, {
   DetailsDrawerHOCProps,
 } from "./_components/detailsDrawer/DetailsDrawer";
 import FileCard from "./_components/fileCard/FileCard";
@@ -108,7 +108,7 @@ export default function Home() {
 
   return (
     <ViewWithDrawer<DetailsDrawerHOCProps>
-      drawerComponent={DetailsDrawer}
+      drawerComponent={DetailsDrawerHOC}
       drawerProps={{
         data: renderedFileData ? (renderedFileData as File) : undefined,
       }}
