@@ -25,7 +25,7 @@ export interface File {
   users: User[];
   assigned_users: User[];
 }
-export interface version {
+export interface Version {
   id: number;
   name: string;
   status: string;
@@ -43,5 +43,5 @@ export interface version {
 export interface Doc2 {
   id: number;
   last_updated_version: string;
-  versions: { [key: string]: version };
+  versions: { [key: string]: Version };
 }

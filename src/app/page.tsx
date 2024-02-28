@@ -104,13 +104,13 @@ export default function Home() {
 
   const gridView = viewType === ViewTypes.GRID ? true : false;
 
-  const renderedFileData = files.find((fileData) => selection[fileData.id]);
+  // const renderedFileData = files.find((fileData) => selection[fileData.id]);
 
   return (
     <ViewWithDrawer<DetailsDrawerHOCProps>
       drawerComponent={DetailsDrawerHOC}
       drawerProps={{
-        data: renderedFileData ? (renderedFileData as File) : undefined,
+        selection: selection ? selection : undefined,
       }}
       detailsSection={viewDetailsSection}
     >
