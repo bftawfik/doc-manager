@@ -23,10 +23,15 @@ import {
 import TagsController from "../tagsController/TagsController";
 import VersionSection from "../versionController/VersionController";
 
-export interface DetailsDrawerProps {
+export interface DetailsDrawerHOCProps {
+  data?: File;
+}
+interface DetailsDrawerProps {
   data: File;
 }
 
+const DetailsDrawerHOC = ({ data }: DetailsDrawerHOCProps) =>
+  !data ? null : <DetailsDrawer data={data} />;
 const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
   const [tags, setTags] = useState<string[]>(data.tags);
   const [version, setVersion] = useState(data.version.id);
@@ -166,4 +171,4 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
   );
 };
 
-export default DetailsDrawer;
+export default DetailsDrawerHOC;
