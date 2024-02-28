@@ -35,7 +35,7 @@ const ViewWithDrawer = <T,>({
         )}
       >
         {/* here's the content of the detailed opend card */}
-        {detailsSection ? (
+        {detailsSection && DrawerComponent ? (
           <DrawerComponent className="overflow-y-auto" {...drawerProps} />
         ) : null}
       </aside>
