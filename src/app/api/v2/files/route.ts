@@ -6,10 +6,17 @@ export async function GET(request: Request) {
   const searchQuery = searchParams.get("q");
 
   const searchResults = documents.map((document) => {
+    const latestVersion = document.versions[document.last_updated_version];
+    // Select only the specified keys
     return {
-      ...document.versions[document.last_updated_version],
       id: document.id,
-      versionId: document.versions[document.last_updated_version].id,
+      name: latestVersion.name,
+      status: latestVersion.status,
+      type: latestVersion.type,
+      last_modified: latestVersion.last_modified,
+      tags: latestVersion.tags,
+      isFav: latestVersion.isFav,
+      assigned_users: latestVersion.assigned_users,
     };
   });
   // if (searchQuery) {

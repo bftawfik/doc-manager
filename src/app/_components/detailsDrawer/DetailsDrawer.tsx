@@ -1,10 +1,12 @@
+import { useQuery } from "@tanstack/react-query";
 import { Eye } from "lucide-react";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
 
 import { dateFormmater } from "@/app/_helpers/dateFormatter";
 import { selectedObjectFromArray } from "@/app/_helpers/selectedObjectFormArray";
-import { File } from "@/app/_types";
+import { getFilesDetails } from "@/app/_services/getFilesDetails";
+import { Version } from "@/app/_types";
 
 import BrandButton from "../brandButton/BrandButton";
 import DatePicker from "../datePicker/DatePIcker";
@@ -21,20 +23,40 @@ import {
   Unlock,
 } from "../svgs";
 import TagsController from "../tagsController/TagsController";
-import VersionSection from "../versionController/VersionController";
+// import VersionSection from "../versionController/VersionController";
 
 export interface DetailsDrawerHOCProps {
-  data?: File;
+  selection?: { [id: number]: boolean };
 }
 interface DetailsDrawerProps {
-  data: File;
+  data: Version;
+  selection?: { [id: number]: boolean };
 }
+const DetailsDrawerHOC = ({ selection }: DetailsDrawerHOCProps) => {
+  // Extract selected IDs from the selection object
+  const selectedIds = Object.keys(selection || {});
+  const selectedIdsAsText = selectedIds.join(",");
+  // const isMultipleSelected = selectedIds.length > 1;
+  const { data: filesDetails } = useQuery({
+    queryKey: ["filesDetails", selection],
+    queryFn: () => getFilesDetails(selectedIdsAsText),
+    enabled: selectedIds.length > 0,
+  });
 
-const DetailsDrawerHOC = ({ data }: DetailsDrawerHOCProps) =>
-  !data ? null : <DetailsDrawer data={data} />;
+  if (!selection || !filesDetails) {
+    return null; // If no selection or filesDetails, return null
+  }
+
+  if (filesDetails.length) {
+    return <DetailsDrawer data={filesDetails[0]} />; // Render DetailsDrawer with the first file details
+  } else {
+    return null;
+  }
+};
+
 const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
   const [tags, setTags] = useState<string[]>(data.tags);
-  const [version, setVersion] = useState(data.version.id);
+  // const [version, setVersion] = useState(data.version.id);
   const [date, setDate] = useState<Date>(
     dateFormmater(data.last_modified, "/", "en-UK")
   );
@@ -65,7 +87,7 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
     setTags(data.tags);
     const formattedDate = dateFormmater(data.last_modified, "/", "en-UK");
     setDate(formattedDate);
-    setVersion(data.version.id);
+    // setVersion(data.version.id);
   }, [data]);
 
   return (
@@ -127,7 +149,7 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
               tagHandler={setTags}
             />
 
-            <div className="  flex w-full items-center justify-between">
+            {/* <div className="  flex w-full items-center justify-between">
               <DrawerLabel label="Version" />
               <VersionSection
                 contentClassName="w-[220px] focus:outline-brand border-brand"
@@ -135,7 +157,7 @@ const DetailsDrawer = ({ data }: DetailsDrawerProps) => {
                 list={data.versions || []}
                 selected={version}
               />
-            </div>
+            </div> */}
             <div className="  flex w-full items-center justify-between">
               <DrawerLabel label="Database" />
               <DropdownMenuCheckboxes
